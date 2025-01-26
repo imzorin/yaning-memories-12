@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaning Memories</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(255, 192, 203, 0.8), rgba(255, 105, 180, 0.6));
+            font-family: 'Arial', sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 3rem;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .media-container img, .media-container video {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-content {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            text-align: right;
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-content input[type="text"] {
+            font-size: 0.8rem;
+            padding: 6px;
+            border: 1px solid rgba(255, 105, 180, 0.8);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .add-content button {
+            background-color: rgba(255, 105, 180, 0.8);
+            color: white;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-content button:hover {
+            background-color: rgba(255, 105, 180, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <h1>Yaning Memories</h1>
+    </header>
+
+    <div class="media-grid" id="mediaGrid">
+        <!-- Media (images/videos) will be dynamically added here -->
+    </div>
+
+    <div class="add-content">
+        <input type="text" id="textInput" placeholder="Add a description">
+        <button id="addMediaButton">Upload</button>
+        <button id="shareThoughtsButton">Share Your Thoughts</button>
+        <input type="file" id="mediaUpload" accept="image/*,video/*" style="display: none;">
+    </div>
+
+    <script>
+        const mediaGrid = document.getElementById('mediaGrid');
+        const mediaUpload = document.getElementById('mediaUpload');
+        const textInput = document.getElementById('textInput');
+        const addMediaButton = document.getElementById('addMediaButton');
+        const shareThoughtsButton = document.getElementById('shareThoughtsButton');
+
+        addMediaButton.addEventListener('click', () => {
+            mediaUpload.click();
+        });
+
+        mediaUpload.addEventListener('change', () => {
+            const file = mediaUpload.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const mediaContainer = document.createElement('div');
+                    mediaContainer.classList.add('media-container');
+
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        mediaContainer.appendChild(img);
+                    } else if (file.type.startsWith('video/')) {
+                        const video = document.createElement('video');
+                        video.src = event.target.result;
+                        video.controls = true;
+                        mediaContainer.appendChild(video);
+                    }
+
+                    const description = document.createElement('p');
+                    description.textContent = textInput.value || 'No description provided';
+                    description.style.color = '#555';
+
+                    mediaContainer.appendChild(description);
+                    mediaGrid.appendChild(mediaContainer);
+
+                    textInput.value = '';
+                    mediaUpload.value = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        shareThoughtsButton.addEventListener('click', () => {
+            window.location.href = 'thoughts.html';
+        });
+    </script>
+
+</body>
+</html>
