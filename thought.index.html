@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Thoughts</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, rgba(255, 192, 203, 0.8), rgba(255, 105, 180, 0.6));
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header {
+            font-size: 2rem;
+            font-family: 'Brush Script MT', cursive;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(255, 105, 180, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .thoughts-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .thought {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid rgba(255, 105, 180, 0.5);
+            border-radius: 5px;
+            background: rgba(255, 105, 180, 0.1);
+        }
+
+        textarea {
+            width: 80%;
+            max-width: 600px;
+            padding: 10px;
+            border: 1px solid rgba(255, 105, 180, 0.8);
+            border-radius: 5px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: rgba(255, 105, 180, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgba(255, 105, 180, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <header>Share Your Thoughts</header>
+
+    <textarea id="thoughtInput" rows="4" placeholder="Write your thoughts here..."></textarea>
+    <button id="addThoughtButton">Add Thought</button>
+
+    <div class="thoughts-container" id="thoughtsContainer">
+        <!-- Thoughts will be dynamically added here -->
+    </div>
+
+    <script>
+        const addThoughtButton = document.getElementById('addThoughtButton');
+        const thoughtInput = document.getElementById('thoughtInput');
+        const thoughtsContainer = document.getElementById('thoughtsContainer');
+
+        addThoughtButton.addEventListener('click', () => {
+            const thoughtText = thoughtInput.value.trim();
+            if (thoughtText) {
+                const thought = document.createElement('div');
+                thought.classList.add('thought');
+                thought.textContent = thoughtText;
+                thoughtsContainer.appendChild(thought);
+                thoughtInput.value = '';
+            }
+        });
+    </script>
+
+</body>
+</html>
